@@ -309,14 +309,14 @@ export default function Sentinel() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
+          model: "llama-3.3-70b-versatile",
           max_tokens: 1000,
           system: SYSTEM_PROMPT,
           messages: apiMessages,
         }),
       });
       const data = await res.json();
-      const raw = data.content?.find(b => b.type === "text")?.text || "";
+      const raw = data.choices?.[0]?.message?.content || "";
       let parsed;
       try {
         const clean = raw.replace(/```json|```/g, "").trim();
